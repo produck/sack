@@ -1,0 +1,20 @@
+{
+	"name": "@produck/sack-workspace",
+	"private": true,
+	"scripts": {
+		"deps:install": "npm -v && npm install",
+		"deps:ci-install": "npm install --include=optional",
+		"lint": "eslint --fix packages/**/*.mjs",
+		"test": "npm test --workspaces --if-present",
+		"coverage": "c8 --reporter=lcov npm run test",
+		"publish": "npm run lint && lerna publish --no-private"
+	},
+	"workspaces": [
+		"packages/sack"
+	],
+	"devDependencies": {
+		"c8": "^9.1.0",
+		"eslint": "^8.56.0",
+		"lerna": "^8.0.2"
+	}
+}
