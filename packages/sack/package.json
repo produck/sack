@@ -1,0 +1,40 @@
+{
+	"name": "@produck/sack",
+	"version": "0.0.0",
+	"description": "Resource abstract based HTTP client & designer for the browser and node.js by fetch API.",
+	"files": [
+		"src",
+		"tsconfig.json"
+	],
+	"types": "src/index.d.ts",
+	"main": "src/index.cjs",
+	"type": "module",
+	"exports": {
+		"import": "./src/index.mjs",
+		"require": "./src/index.cjs"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/produck/sack.git"
+	},
+	"scripts": {
+		"build": "rollup -c script/rollup.config.mjs",
+		"prepublishOnly": "npm run build"
+	},
+	"keywords": [
+		"fetch",
+		"http",
+		"xhr"
+	],
+	"devDependencies": {
+		"@types/mocha": "^10.0.6",
+		"@types/node": "^20.11.0",
+		"mocha": "^10.2.0",
+		"rollup": "^4.9.5"
+	},
+	"author": "ChaosLee",
+	"license": "MIT"
+}
