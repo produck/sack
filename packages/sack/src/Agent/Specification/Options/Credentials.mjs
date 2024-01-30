@@ -6,7 +6,5 @@ import * as Utils from '@produck/sack-utils';
 export const DEFAULT = 'same-origin';
 const VALUES = ['omit', DEFAULT, 'include'];
 export const isCredential = any => VALUES.includes(any);
-
-export const ABSTRACT = [
-	'credentials', isCredential, DEFAULT, Utils.toListString(VALUES),
-];
+export const EXPECTED = Utils.toListString(VALUES);
+export const ABSTRACT = ['credentials', isCredential, DEFAULT, EXPECTED];

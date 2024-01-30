@@ -5,4 +5,5 @@ import * as Utils from '@produck/sack-utils';
  */
 export const DEFAULT = false;
 export const isKeepalive = Utils.Type.isBoolean;
-export const ABSTRACT = ['keepalive', isKeepalive, DEFAULT, 'boolean'];
+export const EXPECTED = 'boolean';
+export const ABSTRACT = ['keepalive', isKeepalive, DEFAULT, EXPECTED];

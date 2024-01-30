@@ -21,6 +21,7 @@
 		"url": "git+https://github.com/produck/sack.git"
 	},
 	"scripts": {
+		"test": "mocha \"**/*.spec.mjs\" -t 999999999",
 		"build": "rollup -c script/rollup.config.mjs",
 		"prepublishOnly": "npm run build"
 	},

@@ -18,7 +18,5 @@ const VALUES = Object.freeze([
 ]);
 
 export const isReferrerPolicy = any => VALUES.includes(any);
-
-export const ABSTRACT = [
-	'referrerPolicy', isReferrerPolicy, DEFAULT, Utils.toListString(VALUES),
-];
+export const EXPECTED = Utils.toListString(VALUES);
+export const ABSTRACT = ['referrerPolicy', isReferrerPolicy, DEFAULT, EXPECTED];

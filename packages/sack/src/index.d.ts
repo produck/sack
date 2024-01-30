@@ -55,6 +55,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isBodyObject(any: any): boolean;
 				export function isBody(any: any): boolean;
 			}
@@ -64,6 +65,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isCache(any: any): boolean;
 			}
 
@@ -72,6 +74,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isCredential(any: any): boolean;
 			}
 
@@ -80,6 +83,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isIntegrity(any: any): boolean;
 			}
 
@@ -88,6 +92,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isKeepalive(any: any): boolean;
 			}
 
@@ -96,6 +101,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isRFC9110Method(any: any): boolean;
 				export function isNodeHttpMethods(any: any): boolean;
 				export function isMethod(any: any): boolean;
@@ -107,6 +113,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isMode(any: any): boolean;
 			}
 
@@ -115,6 +122,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isPriority(any: any): boolean;
 			}
 
@@ -123,6 +131,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isRedirect(any: any): boolean;
 			}
 
@@ -131,6 +140,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isReferrer(any: any): boolean;
 			}
 
@@ -139,6 +149,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isReferrer(any: any): boolean;
 			}
 
@@ -147,6 +158,7 @@ export module Agent {
 
 				export const DEFAULT: DefaultValue;
 				export const ABSTRACT: Abstract<DefaultValue>;
+				export const EXPECTED: string;
 				export function isSignal(any: any): boolean;
 			}
 		}

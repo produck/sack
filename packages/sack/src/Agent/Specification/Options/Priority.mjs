@@ -6,7 +6,5 @@ import * as Utils from '@produck/sack-utils';
 export const DEFAULT = 'auto';
 export const VALUES = Object.freeze(['high', 'low', DEFAULT]);
 export const isPriority = any => VALUES.includes(any);
-
-export const ABSTRACT = [
-	'priority', isPriority, DEFAULT, Utils.toListString(VALUES),
-];
+export const EXPECTED = Utils.toListString(VALUES);
+export const ABSTRACT = ['priority', isPriority, DEFAULT, EXPECTED];

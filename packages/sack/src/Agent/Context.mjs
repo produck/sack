@@ -3,21 +3,21 @@ import { Lang } from '@produck/sack-utils';
 import * as Assert from './Assert.mjs';
 import { Options } from './Specification/index.mjs';
 
-const RETURN_ANY = any => any;
+const PASS = any => any;
 
 const OPTIONS_TABLES = [
-	[...Options.Body.ABSTRACT, RETURN_ANY],
-	[...Options.Cache.ABSTRACT, RETURN_ANY],
-	[...Options.Credentials.ABSTRACT, RETURN_ANY],
-	[...Options.Integrity.ABSTRACT, RETURN_ANY],
-	[...Options.Keepalive.ABSTRACT, RETURN_ANY],
+	[...Options.Body.ABSTRACT, PASS],
+	[...Options.Cache.ABSTRACT, PASS],
+	[...Options.Credentials.ABSTRACT, PASS],
+	[...Options.Integrity.ABSTRACT, PASS],
+	[...Options.Keepalive.ABSTRACT, PASS],
 	[...Options.Method.ABSTRACT, Options.Method.normalize],
-	[...Options.Mode.ABSTRACT, RETURN_ANY],
-	[...Options.Priority.ABSTRACT, RETURN_ANY],
-	[...Options.Redirect.ABSTRACT, RETURN_ANY],
-	[...Options.Referrer.ABSTRACT, RETURN_ANY],
-	[...Options.ReferrerPolicy.ABSTRACT, RETURN_ANY],
-	[...Options.Signal.ABSTRACT, RETURN_ANY],
+	[...Options.Mode.ABSTRACT, PASS],
+	[...Options.Priority.ABSTRACT, PASS],
+	[...Options.Redirect.ABSTRACT, PASS],
+	[...Options.Referrer.ABSTRACT, PASS],
+	[...Options.ReferrerPolicy.ABSTRACT, PASS],
+	[...Options.Signal.ABSTRACT, PASS],
 ];
 
 const VALUES = Symbol('SackAgentRequestContext.Value');
@@ -66,7 +66,7 @@ for (const [name, isValid,, expected, normalize] of OPTIONS_TABLES) {
 			return this[VALUES][name];
 		},
 		set(value) {
-			if (isValid(value)) {
+			if (!isValid(value)) {
 				Lang.ThrowTemplatedTypeError(`RequestContext.${name}`, expected);
 			}
 

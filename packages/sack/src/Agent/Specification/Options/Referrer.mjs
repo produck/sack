@@ -8,7 +8,5 @@ export const VALUES = Object.freeze(['', DEFAULT]);
 
 // TODO This can be a same-origin URL.
 export const isReferrer = any => VALUES.includes(any);
-
-export const ABSTRACT = [
-	'referrer', isReferrer, DEFAULT, Utils.toListString(VALUES),
-];
+export const EXPECTED = Utils.toListString(VALUES);
+export const ABSTRACT = ['referrer', isReferrer, DEFAULT, EXPECTED];

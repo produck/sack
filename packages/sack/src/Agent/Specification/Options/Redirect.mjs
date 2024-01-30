@@ -6,7 +6,5 @@ import * as Utils from '@produck/sack-utils';
 export const DEFAULT = 'follow';
 const VALUES = Object.freeze([DEFAULT, 'error', 'manual']);
 export const isRedirect = any => VALUES.includes(any);
-
-export const ABSTRACT = [
-	'redirect', isRedirect, DEFAULT, Utils.toListString(VALUES),
-];
+export const EXPECTED = Utils.toListString(VALUES);
+export const ABSTRACT = ['redirect', isRedirect, DEFAULT, EXPECTED];

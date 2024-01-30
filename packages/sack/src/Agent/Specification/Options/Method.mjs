@@ -32,8 +32,5 @@ export const isMethod = name => {
 };
 
 export const normalize = name => name.toUpperCase();
-
-export const ABSTRACT = [
-	'method', isMethod, DEFAULT,
-	'http method names',
-];
+export const EXPECTED = 'http method names';
+export const ABSTRACT = ['method', isMethod, DEFAULT, EXPECTED];

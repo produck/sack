@@ -5,4 +5,5 @@ import * as Utils from '@produck/sack-utils';
  */
 export const DEFAULT = '';
 export const isIntegrity = Utils.Type.isString;
-export const ABSTRACT = ['integrity', isIntegrity, DEFAULT, 'string'];
+export const EXPECTED = 'string';
+export const ABSTRACT = ['integrity', isIntegrity, DEFAULT, EXPECTED];

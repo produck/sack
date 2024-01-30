@@ -1,8 +1,7 @@
-import { Type, Lang } from '@produck/sack-utils';
+import { Type, Lang, Error } from '@produck/sack-utils';
 
 import * as Assert from './Assert.mjs';
 import * as Parser from './Parser/index.mjs';
-import * as Error from './Error.mjs';
 
 function CALL_HANDLER(handler) {
 	handler(this);
@@ -76,7 +75,7 @@ for (const name of ['use', 'end']) {
 
 	Receiver.prototype[name] = { [name]: function (...args) {
 		if (this.finished) {
-			Error.throw('Receiver has been finished.');
+			Lang.ThrowError('Receiver has been finished.', Error.SackError);
 		}
 
 		return method.call(this, ...args);
