@@ -1,3 +1,6 @@
+import { Type, Lang } from '@produck/sack-utils';
+
+import * as Assert from './Assert.mjs';
 import * as Parser from './Parser/index.mjs';
 import * as Error from './Error.mjs';
 
@@ -6,22 +9,33 @@ function CALL_HANDLER(handler) {
 }
 
 export class Receiver extends EventTarget {
-	/**
-	 * @param {Request} request
-	 * @param {Response} response
-	 * @param {import('./Agent.mjs').AgentState} state
-	 */
-	constructor(request, response, state) {
+	#response;
+
+	constructor(request, response) {
 		super();
 		this.request = request;
-		this.response = response;
-		this.state = state;
+		this.#response = response;
 		Object.freeze(this);
+	}
+
+	/** @type {Response[]} */
+	#stash = [];
+
+	/**
+	 * https://developer.mozilla.org/en-US/docs/Web/API/Response/clone
+	 */
+	get response() {
+		const clone = this.#response.clone();
+
+		this.#stash.push(clone);
+
+		return clone;
 	}
 
 	#handlers = [];
 
 	use(...handlers) {
+		handlers.forEach(Assert.HandlerInArray);
 		this.#handlers.push(...handlers);
 
 		return this;
@@ -33,15 +47,25 @@ export class Receiver extends EventTarget {
 		return this.#finished;
 	}
 
-	async end(parser = Parser.ToResponse) {
+	async end(parser = Parser.Simple.ToReceiver) {
 		this.#finished = true;
 
-		let returnValue = this;
+		let returnValue;
 
 		await Promise.all([
 			...this.#handlers.map(CALL_HANDLER, this),
 			async () => returnValue = await parser(this),
 		]);
+
+		/**
+		 * If only one cloned branch is consumed, then the entire body will be
+		 * buffered in memory.
+		 */
+		for (const clone of this.#stash) {
+			if (!Type.isNull(clone.body) && !clone.bodyUsed) {
+				clone.arrayBuffer();
+			}
+		}
 
 		return returnValue;
 	}

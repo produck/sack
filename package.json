@@ -10,6 +10,7 @@
 		"publish": "npm run lint && lerna publish --no-private"
 	},
 	"workspaces": [
+		"packages/sack-utils",
 		"packages/sack"
 	],
 	"devDependencies": {

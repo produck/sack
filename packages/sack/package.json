@@ -36,5 +36,8 @@
 		"rollup": "^4.9.5"
 	},
 	"author": "ChaosLee",
-	"license": "MIT"
+	"license": "MIT",
+	"dependencies": {
+		"@produck/sack-utils": "^0.0.0"
+	}
 }
