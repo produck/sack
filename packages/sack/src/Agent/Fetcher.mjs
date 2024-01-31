@@ -26,7 +26,7 @@ export class SackAgentFetcher extends EventTarget {
 
 		this.#modifiers.concat(modifiers).forEach(InvokeModifier, context);
 
-		const request = new Request(context.url, context.requestInit);
+		const request = new Request(context.url, context.options);
 		const response = await fetch(request);
 
 		return new Receiver(request, response).use(...context[HANDLERS]);

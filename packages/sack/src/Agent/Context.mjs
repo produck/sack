@@ -47,13 +47,23 @@ export class SackAgentRequestContext {
 		Object.freeze(this);
 	}
 
-	get requestInit() {
+	get options() {
 		return { headers: this.headers, ...this[VALUES] };
 	}
 
 	finalize(key) {
 		if (!Object.hasOwn(this[FINALS], key)) {
 			Lang.ThrowTemplatedTypeError('key', 'request init key');
+		}
+
+		this[FINALS][key] = true;
+
+		return this;
+	}
+
+	finalizeAll() {
+		for (const [name] of OPTIONS_TABLES) {
+			this[FINALS][name] = true;
 		}
 
 		return this;

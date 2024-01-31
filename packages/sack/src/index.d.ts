@@ -13,7 +13,7 @@ export module Agent {
 	class SackAgentRequestContext implements RequestInit {
 		url: URL;
 		headers: Headers;
-		readonly requestInit: RequestInit;
+		readonly options: RequestInit;
 		finalize(key: keyof RequestInit): this;
 		use(...handlers: Handler[]): this;
 	}

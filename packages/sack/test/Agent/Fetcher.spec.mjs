@@ -30,6 +30,8 @@ describe('Agent::Fetcher', function () {
 		this.afterAll(() => server.close());
 		this.beforeEach(() => requestData.method = null);
 
+		const TryCustom = ctx => ctx.method = 'CUSTOM';
+
 		describe('.request()', function () {
 			it('should return a receiver.', async function () {
 				await agent.request();
@@ -39,38 +41,37 @@ describe('Agent::Fetcher', function () {
 
 		describe('.get()', function () {
 			it('should return a receiver.', async function () {
-				await agent.get();
+				await agent.get(TryCustom);
 				assert.deepEqual(requestData, { method: 'GET' });
 			});
 		});
 
 		describe('.head()', function () {
 			it('should return a receiver.', async function () {
-				await agent.head();
+				await agent.head(TryCustom);
 				assert.deepEqual(requestData, { method: 'HEAD' });
 			});
 		});
 
 		describe('.post()', function () {
 			it('should return a receiver.', async function () {
-				await agent.post();
+				await agent.post(TryCustom);
 				assert.deepEqual(requestData, { method: 'POST' });
 			});
 		});
 
 		describe('.put()', function () {
 			it('should return a receiver.', async function () {
-				await agent.put();
+				await agent.put(TryCustom);
 				assert.deepEqual(requestData, { method: 'PUT' });
 			});
 		});
 
 		describe('.delete()', function () {
 			it('should return a receiver.', async function () {
-				await agent.delete();
+				await agent.delete(TryCustom);
 				assert.deepEqual(requestData, { method: 'DELETE' });
 			});
 		});
 	});
-
 });
