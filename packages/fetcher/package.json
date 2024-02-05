@@ -1,5 +1,5 @@
 {
-	"name": "@produck/sack",
+	"name": "@produck/sack-fetcher",
 	"version": "0.0.0",
 	"description": "Resource abstract based HTTP client & designer for the browser and node.js by fetch API.",
 	"files": [

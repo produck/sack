@@ -10,8 +10,9 @@
 		"publish": "npm run lint && lerna publish --no-private"
 	},
 	"workspaces": [
-		"packages/sack-utils",
-		"packages/sack"
+		"packages/utils",
+		"packages/fetcher",
+		"packages/service"
 	],
 	"devDependencies": {
 		"c8": "^9.1.0",

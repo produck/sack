@@ -1,7 +1,7 @@
 import * as assert from 'node:assert/strict';
 import { describe, it } from 'mocha';
 
-import { SackAgentRequestContext } from '../../src/Agent/Context.mjs';
+import { SackAgentRequestContext } from '../src/Context.mjs';
 
 describe('Agent::Context', function () {
 	it('should new a context', function () {

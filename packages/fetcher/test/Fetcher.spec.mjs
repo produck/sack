@@ -2,15 +2,15 @@ import * as assert from 'node:assert/strict';
 import * as http from 'node:http';
 import { describe, it } from 'mocha';
 
-import * as Sack from '../../src/index.mjs';
+import * as Sack from '../src/index.mjs';
 
 describe('Agent::Fetcher', function () {
 	it('should new a agent.', function () {
-		new Sack.Agent.Fetcher();
+		new Sack.Fetcher();
 	});
 
 	it('should throw if bad modifier.', function () {
-		assert.throws(() => new Sack.Agent.Fetcher(null), {
+		assert.throws(() => new Sack.Fetcher(null), {
 			name: 'TypeError',
 			message: 'Invalid "modifiers[0]", one "function" expected.',
 		});
@@ -19,7 +19,7 @@ describe('Agent::Fetcher', function () {
 	describe('#WithServer', function () {
 		const requestData = { method: null };
 		const SetURL = ctx => ctx.url.href = 'http://[::1]:9000';
-		const agent = new Sack.Agent.Fetcher(SetURL);
+		const agent = new Sack.Fetcher(SetURL);
 
 		const server = http.createServer((req, res) => {
 			requestData.method = req.method;
