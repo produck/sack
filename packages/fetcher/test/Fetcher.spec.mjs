@@ -4,7 +4,7 @@ import { describe, it } from 'mocha';
 
 import * as Sack from '../src/index.mjs';
 
-describe('Agent::Fetcher', function () {
+describe('Fetcher', function () {
 	it('should new a agent.', function () {
 		new Sack.Fetcher();
 	});

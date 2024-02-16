@@ -1,9 +1,13 @@
 declare class SackAgentReceiver extends EventTarget {
 	constructor(request: Request, response: Response);
+	fetcher: SackAgentFetcher;
 	readonly response: Response;
 	readonly finished: boolean;
 	use(...handlers: Handler[]): this;
-	end(parser?: Parser): this | any;
+
+	end<T extends Parser>(
+		parser?: T
+	): T extends undefined ? this : ReturnType<Parser>;
 }
 
 type Parser = (receiver: SackAgentReceiver) => any;

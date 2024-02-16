@@ -8,10 +8,13 @@ function CALL_HANDLER(handler) {
 }
 
 export class Receiver extends EventTarget {
+	/** @type {import('./Fetcher.mjs').SackAgentFetcher} */
+	fetcher;
 	#response;
 
-	constructor(request, response) {
+	constructor(fetcher, request, response) {
 		super();
+		this.fetcher = fetcher;
 		this.request = request;
 		this.#response = response;
 		Object.freeze(this);
@@ -24,11 +27,15 @@ export class Receiver extends EventTarget {
 	 * https://developer.mozilla.org/en-US/docs/Web/API/Response/clone
 	 */
 	get response() {
-		const clone = this.#response.clone();
+		if(this.finished) {
+			return this.#response;
+		} else {
+			const clone = this.#response.clone();
 
-		this.#stash.push(clone);
+			this.#stash.push(clone);
 
-		return clone;
+			return clone;
+		}
 	}
 
 	#handlers = [];
@@ -53,7 +60,7 @@ export class Receiver extends EventTarget {
 
 		await Promise.all([
 			...this.#handlers.map(CALL_HANDLER, this),
-			async () => returnValue = await parser(this),
+			(async () => returnValue = await parser(this))(),
 		]);
 
 		/**

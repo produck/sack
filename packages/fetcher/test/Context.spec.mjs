@@ -3,7 +3,7 @@ import { describe, it } from 'mocha';
 
 import { SackAgentRequestContext } from '../src/Context.mjs';
 
-describe('Agent::Context', function () {
+describe('Context', function () {
 	it('should new a context', function () {
 		new SackAgentRequestContext();
 	});

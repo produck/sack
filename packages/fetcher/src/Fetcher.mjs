@@ -29,7 +29,7 @@ export class SackAgentFetcher extends EventTarget {
 		const request = new Request(context.url, context.options);
 		const response = await fetch(request);
 
-		return new Receiver(request, response).use(...context[HANDLERS]);
+		return new Receiver(this, request, response).use(...context[HANDLERS]);
 	}
 }
 
