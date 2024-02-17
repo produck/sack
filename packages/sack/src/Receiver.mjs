@@ -1,4 +1,4 @@
-import { Error, Is } from '@produck/idiom-common';
+import { Error, FALSE, I, Is, S, TRUE } from '@produck/idiom-common';
 
 import * as Assert from './Assert.mjs';
 import * as Parser from './Parser/index.mjs';
@@ -17,7 +17,7 @@ export class Receiver extends EventTarget {
 		this.fetcher = fetcher;
 		this.request = request;
 		this.#response = response;
-		Object.freeze(this);
+		S.Object.freeze(this);
 	}
 
 	/** @type {Response[]} */
@@ -32,7 +32,7 @@ export class Receiver extends EventTarget {
 		} else {
 			const clone = this.#response.clone();
 
-			this.#stash.push(clone);
+			I.Array.push(this.#stash, clone);
 
 			return clone;
 		}
@@ -41,25 +41,25 @@ export class Receiver extends EventTarget {
 	#handlers = [];
 
 	use(...handlers) {
-		handlers.forEach(Assert.HandlerInArray);
-		this.#handlers.push(...handlers);
+		I.Array.forEach(handlers, Assert.HandlerInArray);
+		I.Array.push(this.#handlers, ...handlers);
 
 		return this;
 	}
 
-	#finished = false;
+	#finished = FALSE;
 
 	get finished() {
 		return this.#finished;
 	}
 
 	async end(parser = Parser.Simple.ToReceiver) {
-		this.#finished = true;
+		this.#finished = TRUE;
 
 		let returnValue;
 
 		await Promise.all([
-			...this.#handlers.map(CALL_HANDLER, this),
+			...I.Array.map(this.#handlers, CALL_HANDLER, this),
 			(async () => returnValue = await parser(this))(),
 		]);
 
@@ -78,13 +78,13 @@ export class Receiver extends EventTarget {
 }
 
 for (const name of ['use', 'end']) {
-	const method = Receiver.prototype[name];
+	const method = I.Function.prototype(Receiver)[name];
 
-	Receiver.prototype[name] = { [name]: function (...args) {
+	I.Function.prototype(Receiver)[name] = { [name]: function (...args) {
 		if (this.finished) {
 			Error.Throw('Receiver has been finished.');
 		}
 
-		return method.call(this, ...args);
+		return I.Function.apply(method, this, args);
 	} }[name];
 }

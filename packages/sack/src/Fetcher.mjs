@@ -1,5 +1,7 @@
+import { I, S } from '@produck/idiom-common';
+
 import * as Assert from './Assert.mjs';
-import * as Modifier from './Modifier/index.mjs';
+import { Method } from './Modifier/index.mjs';
 import { SackAgentRequestContext as Context, HANDLERS } from './Context.mjs';
 import { Receiver } from './Receiver.mjs';
 
@@ -12,35 +14,41 @@ export class SackAgentFetcher extends EventTarget {
 
 	constructor(...modifiers) {
 		super();
-		modifiers.forEach(Assert.ModifierInArray);
-		this.#modifiers.push(...modifiers);
-		Object.freeze(this);
+		I.Array.forEach(modifiers, Assert.ModifierInArray);
+		I.Array.push(this.#modifiers, ...modifiers);
+		S.Object.freeze(this);
 	}
 
 	state = {};
 
 	async request(...modifiers) {
-		modifiers.forEach(Assert.ModifierInArray);
+		I.Array.forEach(modifiers, Assert.ModifierInArray);
 
 		const context = new Context(this.state);
 
-		this.#modifiers.concat(modifiers).forEach(InvokeModifier, context);
+		I.Array.forEach([
+			...this.#modifiers,
+			...modifiers,
+		], InvokeModifier, context);
 
-		const request = new Request(context.url, context.options);
+		const { url, options } = context;
+		const request = new Request(url, options);
 		const response = await fetch(request);
 
 		return new Receiver(this, request, response).use(...context[HANDLERS]);
 	}
 }
 
-for (const [name, modifier] of [
-	['get', Modifier.Method.GET],
-	['head', Modifier.Method.HEAD],
-	['post', Modifier.Method.POST],
-	['put', Modifier.Method.PUT],
-	['delete', Modifier.Method.DELETE],
+for (const [methodName, MethodSetter] of [
+	['get', Method.GET],
+	['head', Method.HEAD],
+	['post', Method.POST],
+	['put', Method.PUT],
+	['delete', Method.DELETE],
 ]) {
-	SackAgentFetcher.prototype[name] = { [name]: function (...args) {
-		return this.request(modifier, Modifier.Method.finalize, ...args);
-	} }[name];
+	I.Function.prototype(SackAgentFetcher)[methodName] = {
+		[methodName]: function (...args) {
+			return this.request(MethodSetter, Method.finalize, ...args);
+		},
+	}[methodName];
 }

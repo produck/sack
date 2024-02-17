@@ -1,4 +1,4 @@
-import { Is, InstanceOf, B } from '@produck/idiom-common';
+import { Is, InstanceOf, B, I } from '@produck/idiom-common';
 import { toListString } from './Utils.mjs';
 
 export const DEFAULT = null;
@@ -21,8 +21,17 @@ function THIS_INSTANCE_OF(Constructor) {
 	return InstanceOf(this, Constructor);
 }
 
-const TYPE_NAMES = BODY_OBJECT_TYPES.map(Constructor => Constructor.name);
-export const isBodyObject = any => BODY_OBJECT_TYPES.some(THIS_INSTANCE_OF, any);
-export const isBody = any => Is.Null(any) || Is.StringType(any) || isBodyObject(any);
+const TYPE_NAMES = I.Array.map(BODY_OBJECT_TYPES, Constructor => {
+	return I.Function.name(Constructor);
+});
+
+export const isBodyObject = any => {
+	return I.Array.some(BODY_OBJECT_TYPES, THIS_INSTANCE_OF, any);
+};
+
+export const isBody = any => {
+	return Is.Null(any) || Is.StringType(any) || isBodyObject(any);
+};
+
 export const EXPECTED = `${toListString(TYPE_NAMES)}, string or null`;
 export const ABSTRACT = ['body', isBody, DEFAULT, EXPECTED];

@@ -1,4 +1,4 @@
-import { S, Error } from '@produck/idiom-common';
+import { S, Error, I, TRUE, FALSE, G } from '@produck/idiom-common';
 
 import * as Assert from './Assert.mjs';
 import { Options } from './Specification/index.mjs';
@@ -20,9 +20,9 @@ const OPTIONS_TABLES = [
 	[...Options.Signal.ABSTRACT, PASS],
 ];
 
-const VALUES = Symbol('SackAgentRequestContext.Value');
-const FINALS = Symbol('SackAgentRequestContext.Final');
-export const HANDLERS = Symbol('SackAgentRequestContext.Handlers');
+const VALUES = G.Symbol();
+const FINALS = G.Symbol();
+export const HANDLERS = G.Symbol();
 
 export class SackAgentRequestContext {
 	url = new URL('/', 'http://default.base.url');
@@ -32,8 +32,8 @@ export class SackAgentRequestContext {
 	[HANDLERS] = [];
 
 	use(...handlers) {
-		handlers.forEach(Assert.HandlerInArray);
-		this[HANDLERS].push(...handlers);
+		I.Array.forEach(handlers, Assert.HandlerInArray);
+		I.Array.push(this[HANDLERS], ...handlers);
 
 		return this;
 	}
@@ -41,10 +41,10 @@ export class SackAgentRequestContext {
 	constructor() {
 		for (const [name,, defaultValue] of OPTIONS_TABLES) {
 			this[VALUES][name] = defaultValue;
-			this[FINALS][name] = false;
+			this[FINALS][name] = FALSE;
 		}
 
-		Object.freeze(this);
+		S.Object.freeze(this);
 	}
 
 	get options() {
@@ -56,14 +56,14 @@ export class SackAgentRequestContext {
 			Error.ThrowTemplatedTypeError('key', 'request init key');
 		}
 
-		this[FINALS][key] = true;
+		this[FINALS][key] = TRUE;
 
 		return this;
 	}
 
 	finalizeAll() {
 		for (const [name] of OPTIONS_TABLES) {
-			this[FINALS][name] = true;
+			this[FINALS][name] = TRUE;
 		}
 
 		return this;
@@ -71,7 +71,7 @@ export class SackAgentRequestContext {
 }
 
 for (const [name, isValid,, expected, normalize] of OPTIONS_TABLES) {
-	Object.defineProperty(SackAgentRequestContext.prototype, name, {
+	S.Object.defineProperty(I.Function.prototype(SackAgentRequestContext), name, {
 		get() {
 			return this[VALUES][name];
 		},

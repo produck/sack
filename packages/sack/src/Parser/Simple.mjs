@@ -1,7 +1,10 @@
 export const ToReceiver = receiver => receiver;
-export const ToResponse = receiver => receiver.response;
-export const ToJSON = receiver => receiver.response.json();
-export const ToText = receiver => receiver.response.text();
-export const ToBlob = receiver => receiver.response.blob();
-export const ToArrayBuffer = receiver => receiver.response.arrayBuffer();
-export const ToFormData = receiver => receiver.response.formData();
+
+const getResponse = receiver => receiver.response;
+
+export const ToResponse = receiver => getResponse(receiver);
+export const ToJSON = receiver => getResponse(receiver).json();
+export const ToText = receiver => getResponse(receiver).text();
+export const ToBlob = receiver => getResponse(receiver).blob();
+export const ToArrayBuffer = receiver => getResponse(receiver).arrayBuffer();
+export const ToFormData = receiver => getResponse(receiver).formData();

@@ -1,3 +1,4 @@
+import { I } from '@produck/idiom-common';
 import { toListString } from './Utils.mjs';
 
 /**
@@ -5,6 +6,6 @@ import { toListString } from './Utils.mjs';
  */
 export const DEFAULT = 'same-origin';
 const VALUES = ['omit', DEFAULT, 'include'];
-export const isCredential = any => VALUES.includes(any);
+export const isCredential = any => I.Array.includes(VALUES, any);
 export const EXPECTED = toListString(VALUES);
 export const ABSTRACT = ['credentials', isCredential, DEFAULT, EXPECTED];

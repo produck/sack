@@ -1,5 +1,5 @@
 import * as http from 'node:http';
-import { Is } from '@produck/idiom-common';
+import { FALSE, I, Is, TRUE } from '@produck/idiom-common';
 
 export const DEFAULT = 'GET';
 
@@ -11,16 +11,22 @@ const RFC9110 = [
 ];
 
 const NODE = [...http.METHODS];
-export const isRFC9110Method = name => RFC9110.includes(name.toUpperCase());
-export const isNodeHttpMethods = name => NODE.includes(name.toUpperCase());
+
+const inMethodSet = list => {
+	return name => I.Array.includes(list, I.String.toUpperCase(name));
+};
+
+export const isRFC9110Method = inMethodSet(RFC9110);
+export const isNodeHttpMethod = inMethodSet(NODE);
+export const normalize = name => I.String.toUpperCase(name);
 
 export const isMethod = name => {
 	if (!Is.StringType(name)) {
-		return false;
+		return FALSE;
 	}
 
 	if (isRFC9110Method(name)) {
-		return true;
+		return TRUE;
 	}
 
 	/**
@@ -28,9 +34,8 @@ export const isMethod = name => {
 	 * yourself.
 	 * https://developer.mozilla.org/en-US/docs/Web/API/fetch#method
 	 */
-	return name.toUpperCase() === name;
+	return normalize(name) === name;
 };
 
-export const normalize = name => name.toUpperCase();
 export const EXPECTED = 'http method names';
 export const ABSTRACT = ['method', isMethod, DEFAULT, EXPECTED];
