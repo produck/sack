@@ -1,5 +1,5 @@
 import * as http from 'node:http';
-import * as Utils from '@produck/sack-utils';
+import { Is } from '@produck/idiom-common';
 
 export const DEFAULT = 'GET';
 
@@ -15,7 +15,7 @@ export const isRFC9110Method = name => RFC9110.includes(name.toUpperCase());
 export const isNodeHttpMethods = name => NODE.includes(name.toUpperCase());
 
 export const isMethod = name => {
-	if (!Utils.Type.isString(name)) {
+	if (!Is.StringType(name)) {
 		return false;
 	}
 

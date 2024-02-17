@@ -12,7 +12,7 @@ describe('Fetcher', function () {
 	it('should throw if bad modifier.', function () {
 		assert.throws(() => new Sack.Fetcher(null), {
 			name: 'TypeError',
-			message: 'Invalid "modifiers[0]", one "function" expected.',
+			message: 'Invalid "modifiers[0]", one "Function" expected.',
 		});
 	});
 

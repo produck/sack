@@ -1,4 +1,4 @@
-import { Lang } from '@produck/sack-utils';
+import { S, Error } from '@produck/idiom-common';
 
 import * as Assert from './Assert.mjs';
 import { Options } from './Specification/index.mjs';
@@ -52,8 +52,8 @@ export class SackAgentRequestContext {
 	}
 
 	finalize(key) {
-		if (!Object.hasOwn(this[FINALS], key)) {
-			Lang.ThrowTemplatedTypeError('key', 'request init key');
+		if (!S.Object.hasOwn(this[FINALS], key)) {
+			Error.ThrowTemplatedTypeError('key', 'request init key');
 		}
 
 		this[FINALS][key] = true;
@@ -77,7 +77,7 @@ for (const [name, isValid,, expected, normalize] of OPTIONS_TABLES) {
 		},
 		set(value) {
 			if (!isValid(value)) {
-				Lang.ThrowTemplatedTypeError(`RequestContext.${name}`, expected);
+				Error.ThrowTemplatedTypeError(`RequestContext.${name}`, expected);
 			}
 
 			if (!this[FINALS][name]) {

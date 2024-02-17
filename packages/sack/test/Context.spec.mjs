@@ -31,7 +31,7 @@ describe('Context', function () {
 		it('should throw if bad hanlder.', function () {
 			assert.throws(() => context.use(null), {
 				name: 'TypeError',
-				message: 'Invalid "handlers[0]", one "function" expected.',
+				message: 'Invalid "handlers[0]", one "Function" expected.',
 			});
 		});
 	});

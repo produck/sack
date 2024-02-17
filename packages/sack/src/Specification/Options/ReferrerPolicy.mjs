@@ -1,4 +1,4 @@
-import * as Utils from '@produck/sack-utils';
+import { toListString } from './Utils.mjs';
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/fetch#referrerpolicy
@@ -18,5 +18,5 @@ const VALUES = Object.freeze([
 ]);
 
 export const isReferrerPolicy = any => VALUES.includes(any);
-export const EXPECTED = Utils.toListString(VALUES);
+export const EXPECTED = toListString(VALUES);
 export const ABSTRACT = ['referrerPolicy', isReferrerPolicy, DEFAULT, EXPECTED];

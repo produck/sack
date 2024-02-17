@@ -71,7 +71,7 @@ describe('Receiver', function () {
 
 			assert.throws(() => receiver.use(null), {
 				name: 'TypeError',
-				message: 'Invalid "handlers[0]", one "function" expected.',
+				message: 'Invalid "handlers[0]", one "Function" expected.',
 			});
 		});
 
@@ -82,7 +82,7 @@ describe('Receiver', function () {
 			await receiver.end();
 
 			assert.throws(() => receiver.use(), {
-				name: 'SackError',
+				name: 'Error',
 				message: 'Receiver has been finished.',
 			});
 		});
@@ -104,7 +104,7 @@ describe('Receiver', function () {
 			await receiver.end();
 
 			assert.throws(() => receiver.end(), {
-				name: 'SackError',
+				name: 'Error',
 				message: 'Receiver has been finished.',
 			});
 		});

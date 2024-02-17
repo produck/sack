@@ -1,4 +1,4 @@
-import * as Utils from '@produck/sack-utils';
+import { toListString } from './Utils.mjs';
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/fetch#cache
@@ -10,5 +10,5 @@ const VALUES = [
 ];
 
 export const isCache = any => VALUES.includes(any);
-export const EXPECTED = Utils.toListString(VALUES);
+export const EXPECTED = toListString(VALUES);
 export const ABSTRACT = ['cache', isCache, DEFAULT, EXPECTED];

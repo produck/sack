@@ -1,9 +1,9 @@
-import { Lang } from '@produck/sack-utils';
+import { Error } from '@produck/idiom-common';
 import { Options } from '../Specification/index.mjs';
 
 export const Set = (name) => {
 	if (!Options.Method.isMethod(name)) {
-		Lang.ThrowTemplatedTypeError('name', Options.Method.EXPECTED);
+		Error.ThrowTemplatedTypeError('name', Options.Method.EXPECTED);
 	}
 
 	return ctx => ctx.method = name;

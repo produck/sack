@@ -1,4 +1,4 @@
-import * as Utils from '@produck/sack-utils';
+import { toListString } from './Utils.mjs';
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/fetch#credentials
@@ -6,5 +6,5 @@ import * as Utils from '@produck/sack-utils';
 export const DEFAULT = 'same-origin';
 const VALUES = ['omit', DEFAULT, 'include'];
 export const isCredential = any => VALUES.includes(any);
-export const EXPECTED = Utils.toListString(VALUES);
+export const EXPECTED = toListString(VALUES);
 export const ABSTRACT = ['credentials', isCredential, DEFAULT, EXPECTED];

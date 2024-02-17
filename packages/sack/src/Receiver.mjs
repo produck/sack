@@ -1,4 +1,4 @@
-import { Type, Lang, Error } from '@produck/sack-utils';
+import { Error, Is } from '@produck/idiom-common';
 
 import * as Assert from './Assert.mjs';
 import * as Parser from './Parser/index.mjs';
@@ -68,7 +68,7 @@ export class Receiver extends EventTarget {
 		 * buffered in memory.
 		 */
 		for (const clone of this.#stash) {
-			if (!Type.isNull(clone.body) && !clone.bodyUsed) {
+			if (!Is.Null(clone.body) && !clone.bodyUsed) {
 				clone.arrayBuffer();
 			}
 		}
@@ -82,7 +82,7 @@ for (const name of ['use', 'end']) {
 
 	Receiver.prototype[name] = { [name]: function (...args) {
 		if (this.finished) {
-			Lang.ThrowError('Receiver has been finished.', Error.SackError);
+			Error.Throw('Receiver has been finished.');
 		}
 
 		return method.call(this, ...args);

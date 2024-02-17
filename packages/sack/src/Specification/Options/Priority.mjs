@@ -1,4 +1,4 @@
-import * as Utils from '@produck/sack-utils';
+import { toListString } from './Utils.mjs';
 
 /**
  * https://developer.mozilla.org/en-US/docs/Web/API/fetch#priority
@@ -6,5 +6,5 @@ import * as Utils from '@produck/sack-utils';
 export const DEFAULT = 'auto';
 export const VALUES = Object.freeze(['high', 'low', DEFAULT]);
 export const isPriority = any => VALUES.includes(any);
-export const EXPECTED = Utils.toListString(VALUES);
+export const EXPECTED = toListString(VALUES);
 export const ABSTRACT = ['priority', isPriority, DEFAULT, EXPECTED];

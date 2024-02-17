@@ -1,13 +1,13 @@
 {
-	"name": "@produck/sack-utils",
+	"name": "@produck/sack",
 	"version": "0.0.0",
-	"description": "Utils of @produck/sack",
+	"description": "Resource abstract based HTTP client & designer for the browser and node.js by fetch API.",
 	"files": [
 		"src",
 		"tsconfig.json"
 	],
-	"types": "./src/index.d.ts",
-	"main": "./src/index.cjs",
+	"types": "src/index.d.ts",
+	"main": "src/index.cjs",
 	"type": "module",
 	"exports": {
 		"import": "./src/index.mjs",
@@ -21,17 +21,24 @@
 		"url": "git+https://github.com/produck/sack.git"
 	},
 	"scripts": {
+		"test": "mocha \"**/*.spec.mjs\" -t 999999999",
 		"build": "rollup -c script/rollup.config.mjs",
 		"prepublishOnly": "npm run build"
 	},
+	"keywords": [
+		"fetch",
+		"http",
+		"xhr"
+	],
 	"devDependencies": {
+		"@types/mocha": "^10.0.6",
 		"@types/node": "^20.11.16",
+		"mocha": "^10.2.0",
 		"rollup": "^4.9.6"
 	},
 	"author": "ChaosLee",
 	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/produck/sack/issues"
-	},
-	"homepage": "https://github.com/produck/sack#readme"
+	"dependencies": {
+		"@produck/idiom-common": "^0.1.1"
+	}
 }
