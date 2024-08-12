@@ -1,11 +1,7 @@
 import { Error, FALSE, I, Is, S, TRUE } from '@produck/idiom-common';
+import { compose } from '@produck/compose';
 
 import * as Assert from './Assert.mjs';
-import * as Parser from './Parser/index.mjs';
-
-function CALL_HANDLER(handler) {
-	handler(this);
-}
 
 export class Receiver extends EventTarget {
 	/** @type {import('./Fetcher.mjs').SackAgentFetcher} */
@@ -20,22 +16,11 @@ export class Receiver extends EventTarget {
 		S.Object.freeze(this);
 	}
 
-	/** @type {Response[]} */
-	#stash = [];
-
 	/**
 	 * https://developer.mozilla.org/en-US/docs/Web/API/Response/clone
 	 */
 	get response() {
-		if(this.finished) {
-			return this.#response;
-		} else {
-			const clone = this.#response.clone();
-
-			I.Array.push(this.#stash, clone);
-
-			return clone;
-		}
+		return this.#finished ? this.#response : this.#response.clone();
 	}
 
 	#handlers = [];
@@ -53,27 +38,22 @@ export class Receiver extends EventTarget {
 		return this.#finished;
 	}
 
-	async end(parser = Parser.Simple.ToReceiver) {
+	#returnValue;
+
+	get returnValue() {
+		return this.#returnValue;
+	}
+
+	set returnValue(value) {
+		this.#returnValue = value;
+	}
+
+	async end() {
 		this.#finished = TRUE;
 
-		let returnValue;
+		await compose(...this.#handlers)(this);
 
-		await Promise.all([
-			...I.Array.map(this.#handlers, CALL_HANDLER, this),
-			(async () => returnValue = await parser(this))(),
-		]);
-
-		/**
-		 * If only one cloned branch is consumed, then the entire body will be
-		 * buffered in memory.
-		 */
-		for (const clone of this.#stash) {
-			if (!Is.Null(clone.body) && !clone.bodyUsed) {
-				clone.arrayBuffer();
-			}
-		}
-
-		return returnValue;
+		return this.#returnValue;
 	}
 }
 

@@ -89,15 +89,6 @@ describe('Receiver', function () {
 	});
 
 	describe('.end()', function () {
-		it('should throw if bad parser.', async function () {
-			const receiver = await fetcher.request();
-
-			assert.rejects(() => receiver.end(null), {
-				name: 'TypeError',
-				message: 'Invalid "handlers[0]", one "function" expected.',
-			});
-		});
-
 		it('should throw if receiver finished.', async function () {
 			const receiver = await fetcher.request();
 
@@ -113,16 +104,26 @@ describe('Receiver', function () {
 			const receiver = await fetcher.request();
 			const target = {};
 
-			assert.equal(await receiver.end(() => target), target);
+			receiver.use(r => r.returnValue = target);
+			assert.equal(await receiver.end(), target);
 		});
 
 		it('should ensure to consume all response clone.', async function () {
 			const receiver = await fetcher.request();
-			const handler = receiver => receiver.response.body;
-			const parser = receiver => receiver.response.text();
 
-			receiver.use(handler, handler);
-			assert.equal(await receiver.end(parser), 'ok');
+			const handler = (receiver, next) => {
+				receiver.response.body;
+				receiver.returnValue;
+
+				return next();
+			};
+
+			const parser = async receiver => {
+				receiver.returnValue = await receiver.response.text();
+			};
+
+			receiver.use(handler, handler, parser);
+			assert.equal(await receiver.end(), 'ok');
 		});
 	});
 });

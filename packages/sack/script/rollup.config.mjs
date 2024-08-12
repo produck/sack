@@ -36,6 +36,7 @@ export default moduleList.map(config => {
 
 		},
 		output: {
+			interop: 'esModule',
 			file: config.output,
 			format: config.format,
 			name: config.name,

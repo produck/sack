@@ -17,16 +17,14 @@ const BODY_OBJECT_TYPES = [
 	B.String,
 ];
 
-function THIS_INSTANCE_OF(Constructor) {
-	return InstanceOf(this, Constructor);
-}
-
 const TYPE_NAMES = I.Array.map(BODY_OBJECT_TYPES, Constructor => {
 	return I.Function.name(Constructor);
 });
 
 export const isBodyObject = any => {
-	return I.Array.some(BODY_OBJECT_TYPES, THIS_INSTANCE_OF, any);
+	return I.Array.some(BODY_OBJECT_TYPES, Constructor => {
+		return InstanceOf(any, Constructor);
+	});
 };
 
 export const isBody = any => {
