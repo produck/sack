@@ -1,35 +1,29 @@
-import { I, S } from '@produck/idiom-common';
+import { compose } from '@produck/compose';
 
 import * as Assert from './Assert.mjs';
 import { Method } from './Modifier/index.mjs';
 import { SackAgentRequestContext as Context, HANDLERS } from './Context.mjs';
 import { Receiver } from './Receiver.mjs';
 
-function InvokeModifier(modifier) {
-	modifier(this);
-}
-
 export class SackAgentFetcher extends EventTarget {
-	#modifiers = [];
+	#workflow = null;
 
 	constructor(...modifiers) {
 		super();
-		I.Array.forEach(modifiers, Assert.ModifierInArray);
-		I.Array.push(this.#modifiers, ...modifiers);
-		S.Object.freeze(this);
+		modifiers.forEach(Assert.ModifierInArray);
+		this.#workflow = compose(...modifiers);
+		Object.freeze(this);
 	}
 
 	state = {};
 
 	async request(...modifiers) {
-		I.Array.forEach(modifiers, Assert.ModifierInArray);
+		modifiers.forEach(Assert.ModifierInArray);
 
+		const workflow = compose(this.#workflow, ...modifiers);
 		const context = new Context(this.state);
 
-		I.Array.forEach([
-			...this.#modifiers,
-			...modifiers,
-		], InvokeModifier, context);
+		await workflow(context);
 
 		const { url, options } = context;
 		const request = new Request(url, options);
@@ -46,7 +40,7 @@ for (const [methodName, MethodSetter] of [
 	['put', Method.PUT],
 	['delete', Method.DELETE],
 ]) {
-	I.Function.prototype(SackAgentFetcher)[methodName] = {
+	SackAgentFetcher.prototype[methodName] = {
 		[methodName]: function (...args) {
 			return this.request(MethodSetter, Method.finalize, ...args);
 		},

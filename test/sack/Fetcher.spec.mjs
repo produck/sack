@@ -2,7 +2,7 @@ import * as assert from 'node:assert/strict';
 import * as http from 'node:http';
 import { describe, it } from 'mocha';
 
-import * as Sack from '../src/index.mjs';
+import * as Sack from '@produck/sack';
 
 describe('Fetcher', function () {
 	it('should new a agent.', function () {

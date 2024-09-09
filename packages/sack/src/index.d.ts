@@ -13,7 +13,7 @@ declare class SackAgentReceiver extends EventTarget {
 type Parser = (receiver: SackAgentReceiver) => any;
 type Handler = (receiver: SackAgentReceiver) => any;
 
-declare class SackAgentRequestContext implements RequestInit {
+export class SackAgentRequestContext implements RequestInit {
 	url: URL;
 	headers: Headers;
 	readonly options: RequestInit;

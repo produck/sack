@@ -1,4 +1,4 @@
-import { S, Error, I, TRUE, FALSE, G } from '@produck/idiom-common';
+import { Error } from '@produck/idiom-common';
 
 import * as Assert from './Assert.mjs';
 import { Options } from './Specification/index.mjs';
@@ -20,20 +20,18 @@ const OPTIONS_TABLES = [
 	[...Options.Signal.ABSTRACT, PASS],
 ];
 
-const VALUES = G.Symbol();
-const FINALS = G.Symbol();
-export const HANDLERS = G.Symbol();
+const VALUES = Symbol('SACK.CONTEXT.VALUES');
+export const HANDLERS = Symbol('SACK.CONTEXT.HANDLERS');
 
 export class SackAgentRequestContext {
 	url = new URL('/', 'http://default.base.url');
 	headers = new Headers();
 	[VALUES] = {};
-	[FINALS] = {};
 	[HANDLERS] = [];
 
 	use(...handlers) {
-		I.Array.forEach(handlers, Assert.HandlerInArray);
-		I.Array.push(this[HANDLERS], ...handlers);
+		handlers.forEach(Assert.HandlerInArray);
+		this[HANDLERS].push(...handlers);
 
 		return this;
 	}
@@ -41,37 +39,18 @@ export class SackAgentRequestContext {
 	constructor() {
 		for (const [name,, defaultValue] of OPTIONS_TABLES) {
 			this[VALUES][name] = defaultValue;
-			this[FINALS][name] = FALSE;
 		}
 
-		S.Object.freeze(this);
+		Object.freeze(this);
 	}
 
 	get options() {
 		return { headers: this.headers, ...this[VALUES] };
 	}
-
-	finalize(key) {
-		if (!S.Object.hasOwn(this[FINALS], key)) {
-			Error.ThrowTemplatedTypeError('key', 'request init key');
-		}
-
-		this[FINALS][key] = TRUE;
-
-		return this;
-	}
-
-	finalizeAll() {
-		for (const [name] of OPTIONS_TABLES) {
-			this[FINALS][name] = TRUE;
-		}
-
-		return this;
-	}
 }
 
 for (const [name, isValid,, expected, normalize] of OPTIONS_TABLES) {
-	S.Object.defineProperty(I.Function.prototype(SackAgentRequestContext), name, {
+	Object.defineProperty(SackAgentRequestContext.prototype, name, {
 		get() {
 			return this[VALUES][name];
 		},

@@ -6,7 +6,6 @@
 		],
 		"strictNullChecks": true,
 		"allowJs": true,
-		"noEmit": true,
-		"module": "NodeNext",
+		"noEmit": true
 	}
 }

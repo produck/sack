@@ -1,7 +1,21 @@
 import * as assert from 'node:assert/strict';
 import { describe, it } from 'mocha';
 
-import { SackAgentRequestContext } from '../src/Context.mjs';
+import * as Sack from '@produck/sack';
+
+function SackAgentRequestContext() {
+	const fetcher = new Sack.Fetcher();
+	/**
+	 * @type {Sack.SackAgentRequestContext}
+	 */
+	let context = null;
+
+	fetcher.request(function extractContext(ctx) {
+		context = ctx;
+	});
+
+	return context;
+}
 
 describe('Context', function () {
 	it('should new a context', function () {
