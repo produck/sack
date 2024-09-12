@@ -1,4 +1,3 @@
-import { S, I } from '@produck/idiom-common'
 import { toListString } from './Utils.mjs';
 
 /**
@@ -6,7 +5,7 @@ import { toListString } from './Utils.mjs';
  */
 export const DEFAULT = '';
 
-const VALUES = S.Object.freeze([
+const VALUES = [
 	DEFAULT,
 	'no-referrer',
 	'no-referrer-when-downgrade',
@@ -16,8 +15,8 @@ const VALUES = S.Object.freeze([
 	'origin-when-cross-origin',
 	'strict-origin-when-cross-origin',
 	'unsafe-url',
-]);
+];
 
-export const isReferrerPolicy = any => I.Array.includes(VALUES, any);
+export const isReferrerPolicy = any => VALUES.includes(VALUES, any);
 export const EXPECTED = toListString(VALUES);
 export const ABSTRACT = ['referrerPolicy', isReferrerPolicy, DEFAULT, EXPECTED];

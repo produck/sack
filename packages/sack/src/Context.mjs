@@ -1,4 +1,4 @@
-import { Error } from '@produck/idiom-common';
+import * as Ow from '@produck/ow';
 
 import * as Assert from './Assert.mjs';
 import { Options } from './Specification/index.mjs';
@@ -56,12 +56,10 @@ for (const [name, isValid,, expected, normalize] of OPTIONS_TABLES) {
 		},
 		set(value) {
 			if (!isValid(value)) {
-				Error.ThrowTemplatedTypeError(`RequestContext.${name}`, expected);
+				Ow.Invalid(`RequestContext.${name}`, expected);
 			}
 
-			if (!this[FINALS][name]) {
-				this[VALUES][name] = normalize(value);
-			}
+			this[VALUES][name] = normalize(value);
 		},
 	});
 }

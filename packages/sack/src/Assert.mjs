@@ -1,11 +1,17 @@
-import { Assert } from '@produck/idiom-common';
+import * as Ow from '@produck/ow';
+
+const assertFunctionType = (any, role) => {
+	if (typeof any !== 'function') {
+		Ow.Invalid(role, 'function');
+	}
+};
 
 const assertModifierInArray = (modifier, index) => {
-	return Assert.FunctionType(modifier, `modifiers[${index}]`);
+	return assertFunctionType(modifier, `modifiers[${index}]`);
 };
 
 const assertHandlerInArray = (handler, index) => {
-	return Assert.FunctionType(handler, `handlers[${index}]`);
+	return assertFunctionType(handler, `handlers[${index}]`);
 };
 
 export {

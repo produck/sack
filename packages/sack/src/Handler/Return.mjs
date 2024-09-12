@@ -1,5 +1,5 @@
 const Returner = accessor => {
-	return /*@__NO_SIDE_EFFECTS__*/ async (receiver, next) => {
+	return async (receiver, next) => {
 		receiver.returnValue = await accessor(receiver);
 
 		return next();

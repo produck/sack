@@ -1,4 +1,4 @@
-import { Error, FALSE, I, Is, S, TRUE } from '@produck/idiom-common';
+import * as Ow from '@produck/ow';
 import { compose } from '@produck/compose';
 
 import * as Assert from './Assert.mjs';
@@ -13,7 +13,7 @@ export class Receiver extends EventTarget {
 		this.fetcher = fetcher;
 		this.request = request;
 		this.#response = response;
-		S.Object.freeze(this);
+		Object.freeze(this);
 	}
 
 	/**
@@ -26,13 +26,13 @@ export class Receiver extends EventTarget {
 	#handlers = [];
 
 	use(...handlers) {
-		I.Array.forEach(handlers, Assert.HandlerInArray);
-		I.Array.push(this.#handlers, ...handlers);
+		handlers.forEach(Assert.HandlerInArray);
+		this.#handlers.push(...handlers);
 
 		return this;
 	}
 
-	#finished = FALSE;
+	#finished = false;
 
 	get finished() {
 		return this.#finished;
@@ -49,7 +49,7 @@ export class Receiver extends EventTarget {
 	}
 
 	async end() {
-		this.#finished = TRUE;
+		this.#finished = true;
 
 		await compose(...this.#handlers)(this);
 
@@ -58,13 +58,13 @@ export class Receiver extends EventTarget {
 }
 
 for (const name of ['use', 'end']) {
-	const method = I.Function.prototype(Receiver)[name];
+	const method = Receiver.prototype[name];
 
-	I.Function.prototype(Receiver)[name] = { [name]: function (...args) {
+	Receiver.prototype[name] = { [name]: function (...args) {
 		if (this.finished) {
-			Error.Throw('Receiver has been finished.');
+			Ow.Error.Common('Receiver has been finished.');
 		}
 
-		return I.Function.apply(method, this, args);
+		return method.apply(this, args);
 	} }[name];
 }

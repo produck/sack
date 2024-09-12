@@ -1,4 +1,3 @@
-import { Is, InstanceOf, B, I } from '@produck/idiom-common';
 import { toListString } from './Utils.mjs';
 
 export const DEFAULT = null;
@@ -8,27 +7,22 @@ export const DEFAULT = null;
  */
 const BODY_OBJECT_TYPES = [
 	Blob,
-	B.ArrayBuffer,
-	B.TypedArray,
-	B.DataView,
+	ArrayBuffer,
+	DataView,
 	FormData,
 	URLSearchParams,
 	ReadableStream,
-	B.String,
+	String,
 ];
 
-const TYPE_NAMES = I.Array.map(BODY_OBJECT_TYPES, Constructor => {
-	return I.Function.name(Constructor);
-});
+const TYPE_NAMES = BODY_OBJECT_TYPES.map(Constructor => Constructor.name);
 
 export const isBodyObject = any => {
-	return I.Array.some(BODY_OBJECT_TYPES, Constructor => {
-		return InstanceOf(any, Constructor);
-	});
+	return BODY_OBJECT_TYPES.some(Constructor => any instanceof Constructor);
 };
 
 export const isBody = any => {
-	return Is.Null(any) || Is.StringType(any) || isBodyObject(any);
+	return any === null || typeof any === 'string' || isBodyObject(any);
 };
 
 export const EXPECTED = `${toListString(TYPE_NAMES)}, string or null`;

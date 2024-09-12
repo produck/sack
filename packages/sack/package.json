@@ -40,6 +40,7 @@
 	"author": "ChaosLee",
 	"license": "MIT",
 	"dependencies": {
-		"@produck/compose": "^0.1.4"
+		"@produck/compose": "^0.1.4",
+		"@produck/ow": "^0.1.0"
 	}
 }

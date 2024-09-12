@@ -1,5 +1,1 @@
-import { I } from '@produck/idiom-common';
-
-export const toListString = array => {
-	return I.Array.join(I.Array.map(array, name => `'${name}'`), ', ');
-};
+export const toListString = array => array.map(name => `'${name}'`).join(', ');

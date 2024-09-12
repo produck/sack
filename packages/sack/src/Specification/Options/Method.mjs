@@ -1,5 +1,4 @@
 import * as http from 'node:http';
-import { FALSE, I, Is, TRUE } from '@produck/idiom-common';
 
 export const DEFAULT = 'GET';
 
@@ -11,22 +10,19 @@ const RFC9110 = [
 ];
 
 const NODE = [...http.METHODS];
-
-const inMethodSet = list => {
-	return name => I.Array.includes(list, I.String.toUpperCase(name));
-};
+const inMethodSet = list => name => list.includes(name.toUpperCase());
 
 export const isRFC9110Method = inMethodSet(RFC9110);
 export const isNodeHttpMethod = inMethodSet(NODE);
-export const normalize = name => I.String.toUpperCase(name);
+export const normalize = name => name.toUpperCase();
 
 export const isMethod = name => {
-	if (!Is.StringType(name)) {
-		return FALSE;
+	if (typeof name !== 'string') {
+		return false;
 	}
 
 	if (isRFC9110Method(name)) {
-		return TRUE;
+		return true;
 	}
 
 	/**
