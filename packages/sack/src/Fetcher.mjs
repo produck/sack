@@ -6,12 +6,12 @@ import { SackAgentRequestContext as Context, HANDLERS } from './Context.mjs';
 import { Receiver } from './Receiver.mjs';
 
 export class SackAgentFetcher extends EventTarget {
-	#workflow = null;
+	#modifiers = [];
 
 	constructor(...modifiers) {
 		super();
 		modifiers.forEach(Assert.ModifierInArray);
-		this.#workflow = compose(...modifiers);
+		this.#modifiers.push(...modifiers);
 		Object.freeze(this);
 	}
 
@@ -20,7 +20,7 @@ export class SackAgentFetcher extends EventTarget {
 	async request(...modifiers) {
 		modifiers.forEach(Assert.ModifierInArray);
 
-		const workflow = compose(this.#workflow, ...modifiers);
+		const workflow = compose(...this.#modifiers, ...modifiers);
 		const context = new Context(this.state);
 
 		await workflow(context);
@@ -42,7 +42,7 @@ for (const [methodName, MethodSetter] of [
 ]) {
 	SackAgentFetcher.prototype[methodName] = {
 		[methodName]: function (...args) {
-			return this.request(MethodSetter, Method.finalize, ...args);
+			return this.request(MethodSetter, ...args);
 		},
 	}[methodName];
 }

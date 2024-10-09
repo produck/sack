@@ -71,7 +71,7 @@ describe('Receiver', function () {
 
 			assert.throws(() => receiver.use(null), {
 				name: 'TypeError',
-				message: 'Invalid "handlers[0]", one "Function" expected.',
+				message: 'Invalid "handlers[0]", one "function" expected.',
 			});
 		});
 

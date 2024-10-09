@@ -17,6 +17,6 @@ const VALUES = [
 	'unsafe-url',
 ];
 
-export const isReferrerPolicy = any => VALUES.includes(VALUES, any);
+export const isReferrerPolicy = any => VALUES.includes(any);
 export const EXPECTED = toListString(VALUES);
 export const ABSTRACT = ['referrerPolicy', isReferrerPolicy, DEFAULT, EXPECTED];

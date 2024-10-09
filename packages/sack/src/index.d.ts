@@ -17,7 +17,6 @@ export class SackAgentRequestContext implements RequestInit {
 	url: URL;
 	headers: Headers;
 	readonly options: RequestInit;
-	finalize(key: keyof RequestInit): this;
 	use(...handlers: Handler[]): this;
 }
 

@@ -1,16 +1,22 @@
 import * as Ow from '@produck/ow';
 import { Options } from '../Specification/index.mjs';
 
-export const Set = (name) => {
+export const SetMethod = (name) => {
 	if (!Options.Method.isMethod(name)) {
 		Ow.Invalid('name', Options.Method.EXPECTED);
 	}
 
-	return ctx => ctx.method = name;
+	return function setMethod(ctx, next) {
+		ctx.method = name;
+
+		return next();
+	};
 };
 
-export const GET = Set('GET');
-export const HEAD = Set('HEAD');
-export const POST = Set('POST');
-export const PUT = Set('PUT');
-export const DELETE = Set('DELETE');
+export { SetMethod as Set };
+
+export const [
+	GET, HEAD, POST, PUT, DELETE,
+] = [
+	'GET', 'HEAD', 'POST', 'PUT', 'DELETE',
+].map(name => SetMethod(name));
