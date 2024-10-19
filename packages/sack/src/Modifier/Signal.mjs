@@ -1,5 +1,5 @@
 import * as Ow from '@produck/ow';
-import { Options } from '../Specification/index.mjs';
+import { Options } from '@produck/spec-whatwg-fetch';
 
 export const Set = signal => {
 	if (!Options.Signal.isSignal(signal)) {

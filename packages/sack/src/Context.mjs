@@ -1,7 +1,7 @@
 import * as Ow from '@produck/ow';
 
 import * as Assert from './Assert.mjs';
-import { Options } from './Specification/index.mjs';
+import { Options } from '@produck/spec-whatwg-fetch';
 
 const PASS = any => any;
 
