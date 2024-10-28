@@ -1,7 +1,7 @@
 import * as Ow from '@produck/ow';
 
 import * as Assert from './Assert.mjs';
-import { Options } from '@produck/spec-whatwg-fetch';
+import { Options } from '@specs-js/whatwg-fetch';
 
 const PASS = any => any;
 
@@ -23,8 +23,12 @@ const OPTIONS_TABLES = [
 const VALUES = Symbol('SACK.CONTEXT.VALUES');
 export const HANDLERS = Symbol('SACK.CONTEXT.HANDLERS');
 
+const DEFAULT_BASE_URL = Object.hasOwn(globalThis, 'window')
+	? globalThis.window.document.baseURI
+	: 'http://default.base.url';
+
 export class SackAgentRequestContext {
-	url = new URL('/', 'http://default.base.url');
+	url = new URL('/', DEFAULT_BASE_URL);
 	headers = new Headers();
 	[VALUES] = {};
 	[HANDLERS] = [];

@@ -1,5 +1,5 @@
 {
-	"name": "@produck/spec-whatwg-fetch",
+	"name": "@specs-js/whatwg-fetch",
 	"version": "0.0.0",
 	"description": "Specification about sack.",
 	"main": "src/index.mjs",

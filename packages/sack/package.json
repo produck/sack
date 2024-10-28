@@ -42,6 +42,6 @@
 	"dependencies": {
 		"@produck/compose": "^0.1.4",
 		"@produck/ow": "^0.1.0",
-		"@produck/spec-whatwg-fetch": "^0.0.0"
+		"@specs-js/whatwg-fetch": "^0.0.0"
 	}
 }
